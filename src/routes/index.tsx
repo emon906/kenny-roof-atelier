@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 
 import { Reveal, MaskedLine, useParallax } from "@/components/lux/Reveal";
 import { BeforeAfter } from "@/components/lux/BeforeAfter";
+import { ProjectStack, type Project } from "@/components/lux/ProjectStack";
+import { ReelsGallery, type Reel } from "@/components/lux/ReelsGallery";
+import { TestimonialStack, type Testimonial } from "@/components/lux/TestimonialStack";
 
 import heroVideo from "@/assets/hero-roof.mp4.asset.json";
 import craftVideo from "@/assets/craft-loop.mp4.asset.json";
@@ -11,7 +14,6 @@ import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import beforeImg from "@/assets/before.jpg";
 import afterImg from "@/assets/after.jpg";
-import tiktokScene from "@/assets/tiktok-scene.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,7 +42,8 @@ const NAV = [
   { label: "Work", href: "#services" },
   { label: "Projects", href: "#projects" },
   { label: "Before / After", href: "#compare" },
-  { label: "TikTok", href: "#tiktok" },
+  { label: "Reels", href: "#reels" },
+  { label: "Testimonials", href: "#testimonials" },
 ];
 
 const SERVICES = [
@@ -66,20 +69,60 @@ const SERVICES = [
   },
 ];
 
-const PROJECTS = [
+const PROJECTS: Project[] = [
   {
-    img: project1,
-    tag: "Full Replacement",
+    image: project1,
+    type: "Full Roof Replacement",
     title: "The Grove Residence",
-    place: "Loganville, GA",
-    copy: "A complete tear-off and rebuild in warm chocolate architectural shingle, finished before the family came home.",
+    location: "Loganville, GA",
+    description: "A complete tear-off and rebuild in architectural shingle, finished cleanly and ready before the family came home.",
   },
   {
-    img: project2,
-    tag: "Detail Work",
+    image: project2,
+    type: "Storm Damage Restoration",
+    title: "After the Storm",
+    location: "Grayson, GA",
+    description: "Documented storm damage, careful material matching, and a complete restoration handled with one clear point of contact.",
+  },
+  {
+    image: beforeImg,
+    type: "Roof Repair & Detail Work",
+    title: "The Details That Hold",
+    location: "Monroe, GA",
+    description: "A focused repair around vulnerable flashing and valleys, correcting the source instead of covering the symptom.",
+  },
+  {
+    image: afterImg,
+    type: "Complete Roof Replacement",
     title: "Ridge & Valley Study",
-    place: "Walton County, GA",
-    copy: "Every course hand-aligned. This is the part nobody sees from the street — and the part that decides how long a roof lasts.",
+    location: "Walton County, GA",
+    description: "Every course hand-aligned. The quiet precision you may not see from the street is what decides how long a roof lasts.",
+  },
+];
+
+const REELS: Reel[] = [
+  { video: heroVideo.url, poster: project1, title: "Morning Tear-Off", detail: "Loganville · Full replacement" },
+  { video: craftVideo.url, poster: project2, title: "The Valley Detail", detail: "Grayson · Craft in close-up" },
+  { video: heroVideo.url, poster: afterImg, title: "Last Light Walkthrough", detail: "Monroe · Final inspection" },
+  { video: craftVideo.url, poster: beforeImg, title: "Built Course by Course", detail: "Walton County · On the roof" },
+];
+
+const TESTIMONIALS: Testimonial[] = [
+  {
+    quote: "Kenny showed up himself, walked the whole roof with me, and sent photos the same afternoon. No pressure, no games.",
+    name: "Homeowner · Loganville, GA",
+  },
+  {
+    quote: "The crew was spotless. You could not tell anyone had been in the yard — except for the new roof.",
+    name: "Homeowner · Grayson, GA",
+  },
+  {
+    quote: "He told me my roof had three good years left instead of selling me a replacement. That's why he's getting the job later.",
+    name: "Homeowner · Monroe, GA",
+  },
+  {
+    quote: "Storm hit on a Sunday. Kenny was on my roof Monday morning with a tarp and a plan.",
+    name: "Homeowner · Walton County, GA",
   },
 ];
 
