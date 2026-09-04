@@ -38,7 +38,7 @@ function TestimonialCard({
   return (
     <div ref={ref} className="h-[72svh] last:h-[52svh] sm:h-[78svh]">
       <motion.article
-        style={reducedMotion ? undefined : { y, scale, rotateX, opacity }}
+        style={reducedMotion ? { y: 0, scale: 1, rotateX: 0, opacity: 1 } : { y, scale, rotateX, opacity }}
         className="sticky top-28 min-h-[24rem] border border-ivory/20 bg-cocoa-deep/95 p-8 shadow-lux backdrop-blur-md sm:p-12 lg:p-14"
       >
         <div className="flex items-center justify-between gap-4">

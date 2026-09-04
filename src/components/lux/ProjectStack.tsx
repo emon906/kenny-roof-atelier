@@ -33,7 +33,7 @@ function ProjectCard({ project, index, total }: { project: Project; index: numbe
   return (
     <div ref={ref} className="h-[112svh] last:h-[84svh] sm:h-[118svh]">
       <motion.article
-        style={reducedMotion ? undefined : { opacity, scale, y }}
+        style={reducedMotion ? { opacity: 1, scale: 1, y: 0 } : { opacity, scale, y }}
         className="sticky top-24 grid min-h-[68svh] overflow-hidden border border-border bg-card shadow-lux lg:grid-cols-[1.3fr_0.7fr]"
       >
         <div className="relative min-h-[42svh] overflow-hidden lg:min-h-[68svh]">
