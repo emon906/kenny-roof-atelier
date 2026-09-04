@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 
 import { Reveal, MaskedLine, useParallax } from "@/components/lux/Reveal";
 import { BeforeAfter } from "@/components/lux/BeforeAfter";
+import { ProjectStack, type Project } from "@/components/lux/ProjectStack";
+import { ReelsGallery, type Reel } from "@/components/lux/ReelsGallery";
+import { TestimonialStack, type Testimonial } from "@/components/lux/TestimonialStack";
 
 import heroVideo from "@/assets/hero-roof.mp4.asset.json";
 import craftVideo from "@/assets/craft-loop.mp4.asset.json";
@@ -11,7 +14,6 @@ import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import beforeImg from "@/assets/before.jpg";
 import afterImg from "@/assets/after.jpg";
-import tiktokScene from "@/assets/tiktok-scene.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,7 +42,8 @@ const NAV = [
   { label: "Work", href: "#services" },
   { label: "Projects", href: "#projects" },
   { label: "Before / After", href: "#compare" },
-  { label: "TikTok", href: "#tiktok" },
+  { label: "Reels", href: "#reels" },
+  { label: "Testimonials", href: "#testimonials" },
 ];
 
 const SERVICES = [
@@ -66,20 +69,60 @@ const SERVICES = [
   },
 ];
 
-const PROJECTS = [
+const PROJECTS: Project[] = [
   {
-    img: project1,
-    tag: "Full Replacement",
+    image: project1,
+    type: "Full Roof Replacement",
     title: "The Grove Residence",
-    place: "Loganville, GA",
-    copy: "A complete tear-off and rebuild in warm chocolate architectural shingle, finished before the family came home.",
+    location: "Loganville, GA",
+    description: "A complete tear-off and rebuild in architectural shingle, finished cleanly and ready before the family came home.",
   },
   {
-    img: project2,
-    tag: "Detail Work",
+    image: project2,
+    type: "Storm Damage Restoration",
+    title: "After the Storm",
+    location: "Grayson, GA",
+    description: "Documented storm damage, careful material matching, and a complete restoration handled with one clear point of contact.",
+  },
+  {
+    image: beforeImg,
+    type: "Roof Repair & Detail Work",
+    title: "The Details That Hold",
+    location: "Monroe, GA",
+    description: "A focused repair around vulnerable flashing and valleys, correcting the source instead of covering the symptom.",
+  },
+  {
+    image: afterImg,
+    type: "Complete Roof Replacement",
     title: "Ridge & Valley Study",
-    place: "Walton County, GA",
-    copy: "Every course hand-aligned. This is the part nobody sees from the street — and the part that decides how long a roof lasts.",
+    location: "Walton County, GA",
+    description: "Every course hand-aligned. The quiet precision you may not see from the street is what decides how long a roof lasts.",
+  },
+];
+
+const REELS: Reel[] = [
+  { video: heroVideo.url, poster: project1, title: "Morning Tear-Off", detail: "Loganville · Full replacement" },
+  { video: craftVideo.url, poster: project2, title: "The Valley Detail", detail: "Grayson · Craft in close-up" },
+  { video: heroVideo.url, poster: afterImg, title: "Last Light Walkthrough", detail: "Monroe · Final inspection" },
+  { video: craftVideo.url, poster: beforeImg, title: "Built Course by Course", detail: "Walton County · On the roof" },
+];
+
+const TESTIMONIALS: Testimonial[] = [
+  {
+    quote: "Kenny showed up himself, walked the whole roof with me, and sent photos the same afternoon. No pressure, no games.",
+    name: "Homeowner · Loganville, GA",
+  },
+  {
+    quote: "The crew was spotless. You could not tell anyone had been in the yard — except for the new roof.",
+    name: "Homeowner · Grayson, GA",
+  },
+  {
+    quote: "He told me my roof had three good years left instead of selling me a replacement. That's why he's getting the job later.",
+    name: "Homeowner · Monroe, GA",
+  },
+  {
+    quote: "Storm hit on a Sunday. Kenny was on my roof Monday morning with a tarp and a plan.",
+    name: "Homeowner · Walton County, GA",
   },
 ];
 
@@ -385,33 +428,26 @@ function Index() {
       </section>
 
       {/* ── PROJECTS ────────────────────────────────── */}
-      <section id="projects" className="bg-background py-28 lg:py-40">
+      <section id="projects" className="overflow-clip bg-background py-28 lg:py-40">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="flex flex-wrap items-end justify-between gap-8">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-8 sm:flex sm:flex-wrap sm:justify-between">
             <div>
               <Reveal>
                 <div className="flex items-center gap-4 text-cocoa-soft">
                   <span className="h-px w-14 bg-brass" />
-                  <span className="text-eyebrow">Featured Work</span>
+                  <span className="text-eyebrow">Recent Projects</span>
                 </div>
               </Reveal>
               <h2 className="mt-8 font-display text-[clamp(2.2rem,5vw,4.2rem)] leading-[1.02] text-cocoa-deep">
-                <MaskedLine>Roofs I'd put</MaskedLine>
-                <MaskedLine delay={110}>
-                  on <span className="italic text-cocoa">my own house.</span>
-                </MaskedLine>
+                <MaskedLine>Real roofs. Real work.</MaskedLine>
+                <MaskedLine delay={110}><span className="italic text-cocoa">Built to last.</span></MaskedLine>
               </h2>
             </div>
             <Reveal delay={200} className="max-w-xs text-muted-foreground">
-              A short, honest portfolio. No stock photos, no borrowed jobs.
+              Four local projects. One personal standard from first inspection to final cleanup.
             </Reveal>
           </div>
-
-          <div className="mt-16 space-y-24">
-            {PROJECTS.map((p, i) => (
-              <ProjectRow key={p.title} project={p} flipped={i % 2 === 1} />
-            ))}
-          </div>
+          <ProjectStack projects={PROJECTS} />
         </div>
       </section>
 
@@ -443,76 +479,37 @@ function Index() {
         </div>
       </section>
 
-      {/* ── TIKTOK ──────────────────────────────────── */}
-      <section id="tiktok" className="relative overflow-hidden bg-background py-28 lg:py-40">
-        <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-12">
-          <div className="lg:col-span-6">
+      {/* ── REELS ───────────────────────────────────── */}
+      <section id="reels" className="relative overflow-hidden bg-background py-28 lg:py-40">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mx-auto max-w-2xl text-center">
             <Reveal>
-              <div className="flex items-center gap-4 text-cocoa-soft">
-                <span className="h-px w-14 bg-brass" />
-                <span className="text-eyebrow">Social</span>
+              <div className="flex items-center justify-center gap-4 text-cocoa-soft">
+                <span className="h-px w-10 bg-brass" />
+                <span className="text-eyebrow">Reels</span>
+                <span className="h-px w-10 bg-brass" />
               </div>
             </Reveal>
             <h2 className="mt-8 font-display text-[clamp(2.2rem,5vw,4.2rem)] leading-[1.02] text-cocoa-deep">
-              <MaskedLine>You've probably</MaskedLine>
-              <MaskedLine delay={110}>
-                already <span className="italic text-cocoa">seen me.</span>
-              </MaskedLine>
+              <MaskedLine>See the real work,</MaskedLine>
+              <MaskedLine delay={110}><span className="italic text-cocoa">straight from the roof.</span></MaskedLine>
             </h2>
-            <Reveal delay={200} className="mt-8 max-w-lg text-lg leading-relaxed text-muted-foreground">
-              I film the real thing — tear-offs, storm damage, the details other crews hide. If you
-              want to know how I work before you ever call me, it's all on TikTok.
-            </Reveal>
-            <Reveal delay={300} className="mt-10 flex flex-wrap items-center gap-4">
-              <a
-                href="https://www.tiktok.com/@rooferkenny"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="sheen rounded-full bg-cocoa-deep px-9 py-4 text-eyebrow text-ivory transition-transform duration-500 hover:-translate-y-0.5"
-              >
-                Follow @RooferKenny
-              </a>
-              <span className="font-display text-2xl italic text-cocoa">@RooferKenny</span>
+            <Reveal delay={200} className="mt-7 text-lg leading-relaxed text-muted-foreground">
+              Tear-offs, detail work, and the final walk — filmed where the work actually happens.
             </Reveal>
           </div>
-
-          <div className="lg:col-span-5 lg:col-start-8">
-            <Reveal variant="blur" className="relative mx-auto max-w-sm">
-              <div className="overflow-hidden rounded-[2rem] border-[10px] border-cocoa-deep shadow-lux">
-                <div className="relative aspect-[9/16]">
-                  <img
-                    src={tiktokScene}
-                    alt="Kenny filming a rooftop TikTok video at sunset in Loganville, Georgia"
-                    loading="lazy"
-                    width={1200}
-                    height={1504}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-cocoa-deep/85 via-transparent to-cocoa-deep/25" />
-                  <div className="absolute inset-x-0 bottom-0 p-6">
-                    <div className="text-eyebrow text-ivory/70">Latest on TikTok</div>
-                    <div className="mt-2 font-display text-xl text-ivory">
-                      "Here's what your roofer hopes you never look at."
-                    </div>
-                  </div>
-                  <div className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/60 bg-ivory/15 backdrop-blur-md animate-float">
-                    <span className="ml-1 text-ivory">▶</span>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </div>
+          <ReelsGallery reels={REELS} />
         </div>
       </section>
 
       {/* ── REVIEWS ─────────────────────────────────── */}
-      <section className="relative overflow-hidden surface-cocoa py-28 lg:py-40 grain">
+      <section id="testimonials" className="relative overflow-clip surface-cocoa py-28 lg:py-40 grain">
         <div className="relative z-10 mx-auto max-w-6xl px-6">
           <div className="text-center">
             <Reveal>
               <div className="flex items-center justify-center gap-4 text-ivory/70">
                 <span className="h-px w-10 bg-brass" />
-                <span className="text-eyebrow">Trust · 4 Reviews</span>
+                <span className="text-eyebrow">Testimonials</span>
                 <span className="h-px w-10 bg-brass" />
               </div>
             </Reveal>
@@ -524,34 +521,7 @@ function Index() {
             </h2>
           </div>
 
-          <div className="mt-16 grid gap-px border border-ivory/15 bg-ivory/15 md:grid-cols-2">
-            {[
-              {
-                q: "Kenny showed up himself, walked the whole roof with me, and sent photos the same afternoon. No pressure, no games.",
-                n: "Homeowner · Loganville, GA",
-              },
-              {
-                q: "The crew was spotless. You could not tell anyone had been in the yard — except for the new roof.",
-                n: "Homeowner · Grayson, GA",
-              },
-              {
-                q: "He told me my roof had three good years left instead of selling me a replacement. That's why he's getting the job later.",
-                n: "Homeowner · Monroe, GA",
-              },
-              {
-                q: "Storm hit on a Sunday. Kenny was on my roof Monday morning with a tarp and a plan.",
-                n: "Homeowner · Walton County, GA",
-              },
-            ].map((r, i) => (
-              <Reveal key={r.n} delay={i * 110} className="bg-cocoa-deep/55 p-9 lg:p-12">
-                <div className="text-brass tracking-[0.35em]">★★★★★</div>
-                <p className="mt-6 font-display text-xl leading-relaxed text-ivory lg:text-2xl">
-                  "{r.q}"
-                </p>
-                <div className="mt-6 text-eyebrow text-ivory/60">{r.n}</div>
-              </Reveal>
-            ))}
-          </div>
+          <TestimonialStack testimonials={TESTIMONIALS} />
         </div>
       </section>
 
@@ -654,48 +624,6 @@ function Index() {
           </div>
         </div>
       </footer>
-    </div>
-  );
-}
-
-function ProjectRow({
-  project,
-  flipped,
-}: {
-  project: (typeof PROJECTS)[number];
-  flipped: boolean;
-}) {
-  const { ref, offset } = useParallax<HTMLDivElement>(55);
-  return (
-    <div className="grid items-center gap-12 lg:grid-cols-12">
-      <div
-        ref={ref}
-        className={`lg:col-span-7 ${flipped ? "lg:order-2 lg:col-start-6" : ""}`}
-      >
-        <Reveal variant="blur">
-          <div className="overflow-hidden rounded-sm shadow-lux">
-            <img
-              src={project.img}
-              alt={`${project.title} — ${project.tag} in ${project.place}`}
-              loading="lazy"
-              width={1408}
-              height={1008}
-              className="h-full w-full object-cover"
-              style={{ transform: `scale(1.08) translate3d(0, ${offset * 0.16}px, 0)` }}
-            />
-          </div>
-        </Reveal>
-      </div>
-      <div className={`lg:col-span-4 ${flipped ? "lg:order-1 lg:col-start-1" : "lg:col-start-9"}`}>
-        <Reveal delay={140}>
-          <div className="text-eyebrow text-brass">{project.tag}</div>
-          <h3 className="mt-5 font-display text-3xl leading-tight text-cocoa-deep lg:text-4xl">
-            {project.title}
-          </h3>
-          <div className="mt-2 text-sm text-muted-foreground">{project.place}</div>
-          <p className="mt-6 leading-relaxed text-muted-foreground">{project.copy}</p>
-        </Reveal>
-      </div>
     </div>
   );
 }
